@@ -1,13 +1,13 @@
 import random
 import asyncio
-import aioredis
-
 import time
+import aioredis
+from conf.settings import URL_DATABASE
 
 async def main():
     while True:
         try:
-            redis = await aioredis.from_url("redis://localhost")
+            redis = await aioredis.from_url(URL_DATABASE)
             async with redis.pipeline(transaction=True) as pipe:
                 ok1, ok2, ok3 = await (
                                         pipe.set("id", random.randint(1,100))
@@ -23,8 +23,8 @@ async def main():
             assert ok1
             assert ok2
             assert ok3
-        except:
-            print('Ocurrio un eror...')
+        except Exception as e:
+            print(e)
 
         time.sleep(1)
         

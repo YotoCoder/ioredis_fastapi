@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
    
 services:
   producer:
@@ -7,7 +7,12 @@ services:
     volumes:
       - .:/code
     ports:
-      - '8888:8888'
+      - '81:81'
     restart: always
     expose:
-      - '8888'
+      - '81'
+    networks:
+       - red-api
+networks:
+  red-api:
+    external: true
