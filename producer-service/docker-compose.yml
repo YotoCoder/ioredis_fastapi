@@ -13,6 +13,8 @@ services:
       - '81'
     networks:
        - red-api
+    environment:
+      - URL_DATABASE=${URL_DATABASE}
 networks:
   red-api:
     external: true
