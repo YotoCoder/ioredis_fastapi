@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 
 services:
   service-api:
@@ -8,6 +8,11 @@ services:
       - .:/app
     ports:
       - 80:80
-    extra_hosts:
-      - "localhost"
     restart: on-failure
+    expose:
+      - 80
+    networks:
+       - red-api
+networks:
+  red-api:
+    external: true

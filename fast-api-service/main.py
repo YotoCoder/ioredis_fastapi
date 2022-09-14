@@ -1,13 +1,14 @@
 
 from fastapi import FastAPI
 import aioredis
+from conf.settings import URL_DATABASE
 
 app = FastAPI()
 
 
 @app.get('/metrics')
 async def metrics():
-    redis = aioredis.from_url("redis://localhost")
+    redis = aioredis.from_url(URL_DATABASE)
    
     id = await redis.get('id')
     temp = await redis.get('temp')
@@ -19,4 +20,3 @@ async def metrics():
                 'Temp': int(temp),
                 'Humidity': int(hum),
             }
-
