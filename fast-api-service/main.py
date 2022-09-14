@@ -1,25 +1,22 @@
 
 from fastapi import FastAPI
-
-from fastapi.middleware.cors import CORSMiddleware
 import aioredis
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
 
-
-@app.get('/temp')
-async def temp():
+@app.get('/metrics')
+async def metrics():
     redis = aioredis.from_url("redis://localhost")
    
-    value = await redis.get('temp')
+    id = await redis.get('id')
+    temp = await redis.get('temp')
+    hum = await redis.get('humidity')
+ 
     
-    return value
+    return {
+                'ID': int(id),
+                'Temp': int(temp),
+                'Humidity': int(hum),
+            }
 
